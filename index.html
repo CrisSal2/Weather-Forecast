@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Forecast</title>
 </head>
 <body>
     <header>
-        <nav class="w-full h-full border-solid border-2 border-black">
-            Wather Dashbaord
+        <nav id="nav" class="w-full h-32 text-center border-solid border-2 border-black">
+            <h1 id="nav-text" class="text-white mt-10 text-lg">Weather Dashbaord</h1>
         </nav>
     </header>
+    <section class="flex flex-wrap">
+        <div id="search-section" class="h-screen w-1/4 border-solid border-2 border-black">
+            
+        </div>
+        <div id="api-section" class="h-screen w-3/4 border-solid border-2 border-black"></div>
+    </section>
 <script src=".//assets/js/script.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>
