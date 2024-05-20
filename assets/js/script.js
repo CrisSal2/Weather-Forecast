@@ -9,7 +9,7 @@ const APIkey = 'efe69132a772f9de7f8b7a79c59ed1fb';
 
 const cityForm = document.querySelector('#city-form');
 const cityInput = document.querySelector('#city-input');
-const prevCitiesList = document.querySelector('#prevCities');
+const prevCitiesList = document.querySelector('#cityList');
 const currentCity = document.querySelector('#currentCity');
 const currentCityTemp = document.querySelector('#currentCityTemp');
 const currentCityWind = document.querySelector('#currentCityWind');
@@ -74,7 +74,7 @@ function addCityToList() {
 
 
 
-function setWeatherEmoji (day) {
+function setWeatherEmoji(day) {
     let emoji;
     if (day.weather[0].main === "Clouds") {
         emoji = '🌥️';
@@ -106,4 +106,37 @@ function renderCurrentCity(city) {
     currentCityTemp.textContent = `Temp: ${city.main.temp}\u00B0F`
     currentCityWind.textContent = `Wind: ${city.wind.speed} MPH`
     currentCityHumidity.textContent = `Humidity: ${city.main.humidity}%`
+}
+
+// Render five day forecast
+function renderFiveDay() {
+    // Create elements
+    const fiveDayCard = document.createElement('div');
+    fiveDayCard.classList.add('card', 'forecast-card', 'col-xs-12', 'col-md-4', 'col-xl', 'mb-2');
+    const dateHeader = document.createElement('div');
+    dateHeader.classList.add('card-header');
+    const ul = document.createElement('ul');
+    ul.classList.add('list-group');
+    const temp = document.createElement('li');
+    temp.classList.add('list-group-item');
+    const wind = document.createElement('li');
+    wind.classList.add('list-group-item');
+    const humidity = document.createElement('li');
+    humidity.classList.add('list-group-item');
+
+    // Fill in data
+    dateHeader.innerText = `${dayjs(fiveDay.list[i].dt_txt).format('M/DD/YYYY')} ${setWeatherEmoji(fiveDay.list[i])}` ;
+    temp.innerText = ` Temp: ${fiveDay.list[i].main.temp}\u00B0F`;
+    wind.innerText = `Wind: ${fiveDay.list[i].wind.speed} MPH`;
+    humidity.innerText = `Humidity: ${fiveDay.list[i].main.humidity}%`;
+
+    // Append to document
+    ul.append(temp, wind, humidity);
+    fiveDayCard.append(dateHeader, ul);
+    fiveDayRow.append(fiveDayCard);
+}
+
+// Remove elements created in renderFiveDay()
+function resetFiveDay() {
+    fiveDayRow.innerText = ''
 }
