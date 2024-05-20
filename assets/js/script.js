@@ -9,6 +9,13 @@ const APIkey = 'efe69132a772f9de7f8b7a79c59ed1fb';
 
 const cityForm = document.querySelector('#city-form');
 const cityInput = document.querySelector('#city-input');
+const prevCitiesList = document.querySelector('#prevCities');
+const currentCity = document.querySelector('#currentCity');
+const currentCityTemp = document.querySelector('#currentCityTemp');
+const currentCityWind = document.querySelector('#currentCityWind');
+const currentCityHumidity = document.querySelector('#currentCityHumidity');
+const selectedCityConditions = document.querySelector('#selectedCityConditions');
+const fiveDayRow = document.querySelector('#fiveDayRow');
 
 
 /*********************** Default City ******************/
@@ -26,7 +33,7 @@ function resetCityList() {
     prevCitiesList.innerText = '';
 }
 
-createCityList = function() {
+function createCityList() {
     resetCityList();
     for (const city of cityList) {
         cityButtonContainer = document.createElement('div')
@@ -47,7 +54,7 @@ createCityList = function() {
 /******************** Add City To List *****************/
 
 
-addCityToList = function() {
+function addCityToList() {
 
     if (cityInput.value !== '') {
         let searchedCityEntered = cityInput.value;
@@ -62,3 +69,41 @@ addCityToList = function() {
 }
 
 
+
+/******************** Weather conditions *****************/
+
+
+
+function setWeatherEmoji (day) {
+    let emoji;
+    if (day.weather[0].main === "Clouds") {
+        emoji = '🌥️';
+    } else if (day.weather[0].main === "Clear") {
+        emoji = '🌞';
+    } else if (day.weather[0].main === "Drizzle" || day.weather[0].main === "Rain") {
+        emoji = '🌧️';
+    } else if (day.weather[0].main === "Thunderstorm") {
+        emoji = '⛈️';
+    } else if (day.weather[0].main === "Snow") {
+        emoji = '❄️';
+    } else {emoji = '😶‍🌫️'}
+    return emoji;
+}
+
+function renderCurrentCity(city) {
+    currentCity.textContent = `${city.name} ${dayjs().format('M/DD/YYYY')} ${setWeatherEmoji(city)}` 
+    currentCityTemp.textContent = `Temp: ${city.main.temp}\u00B0F`
+    currentCityWind.textContent = `Wind: ${city.wind.speed} MPH`
+    currentCityHumidity.textContent = `Humidity: ${city.main.humidity}%`
+}
+
+
+/******************** Render City Weather *****************/
+
+
+function renderCurrentCity(city) {
+    currentCity.textContent = `${city.name} ${dayjs().format('M/DD/YYYY')} ${setWeatherEmoji(city)}` 
+    currentCityTemp.textContent = `Temp: ${city.main.temp}\u00B0F`
+    currentCityWind.textContent = `Wind: ${city.wind.speed} MPH`
+    currentCityHumidity.textContent = `Humidity: ${city.main.humidity}%`
+}
