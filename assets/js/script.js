@@ -21,6 +21,11 @@ let cityList  = JSON.parse(localStorage.getItem('cityList')) || [];
 /****************** City Search Function ****************/
 
 
+
+function resetCityList() {
+    prevCitiesList.innerText = '';
+}
+
 createCityList = function() {
     resetCityList();
     for (const city of cityList) {
@@ -36,6 +41,24 @@ createCityList = function() {
         cityButtonContainer.append(prevCityButton);
         prevCitiesList.append(cityButtonContainer);
     }
+}
+
+
+/******************** Add City To List *****************/
+
+
+addCityToList = function() {
+
+    if (cityInput.value !== '') {
+        let searchedCityEntered = cityInput.value;
+        let searchedCityLower = searchedCityEntered.toLowerCase();
+        let searchedCity = searchedCityLower.charAt(0).toUpperCase() + searchedCityLower.slice(1);
+        if (!cityList.includes(searchedCity)) {
+            cityList.push(searchedCity);
+        }
+        localStorage.setItem('cityList', JSON.stringify(cityList))
+    }
+    return cityList;
 }
 
 
