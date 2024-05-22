@@ -15,5 +15,5 @@
 
 Launched webstie link: https://crissal2.github.io/Weather-Forecast/
 
-![Webpage Preview](./assets/img/Task-Board-Preview.png)
+![Webpage Preview](./assets/img/Weather-Forecast.png)
 
