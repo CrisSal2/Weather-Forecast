@@ -36,6 +36,37 @@
     
 }
 
+.forecast-card {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 13rem;
+    width: 10rem;
+    font-size: large;
+    border: solid;
+    background-color: var(--color-4);
+    color: var(--main-color);
+    margin-left: auto;
+    margin-top: 5rem;
+}
+
+#selectedCity {
+
+    background-color: var(--color-3);
+    color: var(--color-4);
+    
+}
+
+#fiveDay {
+
+    font-size: larger;
+    margin-top: 5rem;
+    color: var(--main-color);
+
+}
+
+
 
 /************************************ Form ******************************************************/
 

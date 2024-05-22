@@ -21,17 +21,13 @@ const fiveDayRow = document.querySelector('#fiveDayRow');
 /*********************** Default City ******************/
 
 
-let city = localStorage.getItem('currentCity') || 'Irvine';
+let city = localStorage.getItem('currentCity') || 'Orange';
 let cityList  = JSON.parse(localStorage.getItem('cityList')) || [];
 
 
 /****************** City Search Function ****************/
 
 
-
-function resetCityList() {
-    prevCitiesList.innerText = '';
-}
 
 function createCityList() {
     resetCityList();
@@ -51,7 +47,9 @@ function createCityList() {
 }
 
 
+
 /******************** Add City To List *****************/
+
 
 
 function addCityToList() {
@@ -66,6 +64,10 @@ function addCityToList() {
         localStorage.setItem('cityList', JSON.stringify(cityList))
     }
     return cityList;
+}
+
+function resetCityList() {
+    prevCitiesList.innerText = '';
 }
 
 
@@ -108,11 +110,16 @@ function renderCurrentCity(city) {
     currentCityHumidity.textContent = `Humidity: ${city.main.humidity}%`
 }
 
-// Render five day forecast
+
+
+/**************** Render five day forecast ****************/
+
+
+
 function renderFiveDay() {
-    // Create elements
+    
     const fiveDayCard = document.createElement('div');
-    fiveDayCard.classList.add('card', 'forecast-card', 'col-xs-12', 'col-md-4', 'col-xl', 'mb-2');
+    fiveDayCard.classList.add('card', 'forecast-card', 'rounded');
     const dateHeader = document.createElement('div');
     dateHeader.classList.add('card-header');
     const ul = document.createElement('ul');
@@ -140,3 +147,88 @@ function renderFiveDay() {
 function resetFiveDay() {
     fiveDayRow.innerText = ''
 }
+
+
+
+/************************************************ Main Function ***************************************************/
+
+
+
+function handleCityInput(city) {
+    
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=imperial`;
+    fetch(queryURL)
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error('City not found. Please enter a valid city name.');
+            }
+            resetFiveDay()
+            addCityToList();
+            createCityList();
+            localStorage.setItem('currentCity', city);
+            cityInput.value = '';
+            return response.json();
+        })
+        .then(function(cityData) {
+            city = cityData;
+            renderCurrentCity(city);
+            const cityLat = city.coord.lat;
+            const cityLon = city.coord.lon;
+            const fiveDayURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&cnt=50&appid=${APIkey}&units=imperial`;
+            return fetch(fiveDayURL);
+        })
+            .then(function(response) {
+                return response.json();              
+            })
+            .then(function(fiveDayData) {
+                fiveDay = fiveDayData;
+                for (i = 7; i <= 39 ; i += 8) {
+                    renderFiveDay()
+                }
+            }) 
+            .catch(function(error) {
+                alert(error.message); 
+                return;
+            });                      
+}
+
+
+
+/******************************************************************************************************************************/
+
+
+
+/* Init - Grab last city looked at and render the weather data and create history list from local storage */
+handleCityInput(city);
+createCityList();
+
+/* Handle new city on form input */
+cityForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    let city = cityInput.value;
+    handleCityInput(city)
+})
+
+/* Sets current city to whatever city button is clicked */
+document.body.addEventListener('click', function(e) {
+    if (e.target.classList.contains('prevCityButton')) {
+        city = e.target.innerText;
+        handleCityInput(city);
+        localStorage.setItem('currentCity', city);
+    }
+})
+
+/* Handle deleting a city button from the list and removing that city from the list */
+document.body.addEventListener('click', function(e) {
+    if (e.target.classList.contains('deleteCityButton')) {
+        buttonToDelete = e.target.parentNode;
+        citytoDelete = e.target.nextSibling.innerText;
+        buttonToDelete.remove();
+        cityList = cityList.filter(function(city) {
+            return city !== citytoDelete;
+        })
+        localStorage.setItem('cityList', JSON.stringify(cityList))
+        return cityList;
+    }
+})
