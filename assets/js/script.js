@@ -33,13 +33,13 @@ function createCityList() {
     resetCityList();
     for (const city of cityList) {
         cityButtonContainer = document.createElement('div')
-        cityButtonContainer.classList.add('my-1')
+        cityButtonContainer.classList.add('my-1', 'citySelector')
         prevCityButton = document.createElement('button');
         deleteCityButton = document.createElement('button')
         prevCityButton.classList.add('prevCityButton');
         deleteCityButton.classList.add('deleteCityButton')
         prevCityButton.innerText = city;
-        deleteCityButton.innerText = 'X'
+        deleteCityButton.innerText = '✖️'
         cityButtonContainer.append(deleteCityButton);
         cityButtonContainer.append(prevCityButton);
         prevCitiesList.append(cityButtonContainer);

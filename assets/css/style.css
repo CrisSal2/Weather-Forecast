@@ -55,8 +55,18 @@
 
     background-color: var(--color-3);
     color: var(--color-4);
-    
+
 }
+
+.citySelector {
+
+    background-color: var(--color-3);
+    color: var(--color-4);
+    border-radius: 25px;
+    height: 2rem;
+
+}
+
 
 #fiveDay {
 
