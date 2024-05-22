@@ -198,7 +198,7 @@ function handleCityInput(city) {
 
 
 
-/* Init - Grab last city looked at and render the weather data and create history list from local storage */
+/* Grab last city looked at and render the weather data and create history list from local storage */
 handleCityInput(city);
 createCityList();
 
